@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Fresh - Products</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #8dc63f;
+            --dark-green: #3b6e47;
+            --text-dark: #2d4739;
+            --text-light: #4e5e55;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+        }
+        
+        .navbar {
+            background: #fff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            letter-spacing: 1px;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #e7fce0 0%, #c5e1a5 100%);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 0.6rem 1.5rem;
+            background: #fff;
+            border: 2px solid var(--primary-color);
+            color: var(--dark-green);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #e7fce0 0%, #c5e1a5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .product-card-body {
+            padding: 1.5rem;
+        }
+        
+        .product-card-body h5 {
+            font-weight: 600;
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+        
+        .btn-primary-custom {
+            background: var(--secondary-color);
+            color: #fff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn-primary-custom:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            background: #2d3436;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-section h5 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #b2bec3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-seedling"></i> Farm Fresh
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Products</h1>
+            <p>Fresh, organic produce grown with care. Browse our selection of seasonal fruits, vegetables, and farm-fresh goods.</p>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterProducts('all')">All</button>
+                <button class="category-btn" onclick="filterProducts('vegetables')">Vegetables</button>
+                <button class="category-btn" onclick="filterProducts('fruits')">Fruits</button>
+                <button class="category-btn" onclick="filterProducts('herbs')">Herbs</button>
+                <button class="category-btn" onclick="filterProducts('organic')">Organic</button>
+            </div>
+
+            <div class="row g-4" id="productsGrid">
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop" alt="Fresh Spinach">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Fresh Spinach</h5>
+                            <p class="text-muted small">Locally grown, nutrient-rich spinach. Perfect for salads and cooking.</p>
+                            <div class="product-price">$3.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&h=300&fit=crop" alt="Carrots">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Carrots</h5>
+                            <p class="text-muted small">Sweet, crisp carrots harvested at peak freshness.</p>
+                            <div class="product-price">$2.49/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1546097491-8c513468a49f?w=400&h=300&fit=crop" alt="Tomatoes">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Tomatoes</h5>
+                            <p class="text-muted small">Juicy, vine-ripened tomatoes. Bursting with flavor.</p>
+                            <div class="product-price">$4.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1604977046802-4c8c0e5c0c5a?w=400&h=300&fit=crop" alt="Cucumbers">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Cucumbers</h5>
+                            <p class="text-muted small">Fresh, crisp cucumbers. Ideal for salads and snacks.</p>
+                            <div class="product-price">$2.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="fruits">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Seasonal</span>
+                            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=300&fit=crop" alt="Strawberries">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Strawberries</h5>
+                            <p class="text-muted small">Sweet, plump strawberries picked at perfect ripeness.</p>
+                            <div class="product-price">$5.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="fruits">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Seasonal</span>
+                            <img src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&h=300&fit=crop" alt="Blueberries">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Blueberries</h5>
+                            <p class="text-muted small">Antioxidant-rich blueberries. Fresh from our fields.</p>
+                            <div class="product-price">$6.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=400&h=300&fit=crop" alt="Sweet Corn">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Sweet Corn</h5>
+                            <p class="text-muted small">Fresh-picked sweet corn. Perfect summer side.</p>
+                            <div class="product-price">$0.75/ear</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1518977822534-7049a61ee0c2?w=400&h=300&fit=crop" alt="Potatoes">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Potatoes</h5>
+                            <p class="text-muted small">Versatile, farm-fresh potatoes. Great for any dish.</p>
+                            <div class="product-price">$2.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?w=400&h=300&fit=crop" alt="Broccoli">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Broccoli</h5>
+                            <p class="text-muted small">Nutrient-dense broccoli florets. Fresh and crisp.</p>
+                            <div class="product-price">$3.49/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="vegetables organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&h=300&fit=crop" alt="Bell Peppers">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Bell Peppers</h5>
+                            <p class="text-muted small">Colorful bell peppers. Sweet and crunchy.</p>
+                            <div class="product-price">$4.49/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="fruits organic">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&h=300&fit=crop" alt="Apples">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Apples</h5>
+                            <p class="text-muted small">Crisp, sweet apples from our orchard.</p>
+                            <div class="product-price">$3.99/lb</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3" data-category="herbs">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Fresh</span>
+                            <img src="https://images.unsplash.com/photo-1618375569909-3c8616cf7739?w=400&h=300&fit=crop" alt="Fresh Herbs">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Fresh Herbs</h5>
+                            <p class="text-muted small">Basil, parsley, cilantro, and more. Picked fresh daily.</p>
+                            <div class="product-price">$2.99/bunch</div>
+                            <button class="btn btn-primary-custom">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h5><i class="fas fa-seedling"></i> Farm Fresh</h5>
+                        <p>Your trusted source for fresh, organic produce. We're committed to bringing you the best farm-to-table experience.</p>
+                        <div class="social-links mt-3">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="footer-section">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="products.html">Products</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-section">
+                        <h5>Get in Touch</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Farm Road, Green Valley, CA 94000</li>
+                            <li><i class="fas fa-phone"></i> <a href="tel:+15551234567">(555) 123-4567</a></li>
+                            <li><i class="fas fa-envelope"></i> <a href="mailto:info@farmfresh.com">info@farmfresh.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-section">
+                        <h5>Farm Hours</h5>
+                        <ul>
+                            <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
+                            <li>Saturday: 7:00 AM - 5:00 PM</li>
+                            <li>Sunday: 9:00 AM - 4:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Farm Fresh. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Back to Top Button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Product Filter
+        function filterProducts(category) {
+            const products = document.querySelectorAll('[data-category]');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category').includes(category)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

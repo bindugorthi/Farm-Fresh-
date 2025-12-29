@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Fresh - Organic Farm Website</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #8dc63f;
+            --dark-green: #3b6e47;
+            --light-green: #e7fce0;
+            --text-dark: #2d4739;
+            --text-light: #4e5e55;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Sticky Navbar */
+        .navbar {
+            background: #fff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            transition: all 0.3s;
+        }
+        
+        .navbar.sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            letter-spacing: 1px;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Hero Carousel */
+        .hero-carousel {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .carousel-item {
+            height: 600px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .carousel-caption h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        
+        .carousel-caption p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+        
+        .btn-primary-custom {
+            background: var(--secondary-color);
+            color: #fff;
+            padding: 0.75rem 2.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(141, 198, 63, 0.3);
+        }
+        
+        .btn-primary-custom:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(141, 198, 63, 0.4);
+        }
+        
+        /* Section Styles */
+        .section-padding {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        /* Features Section */
+        .feature-box {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s;
+            height: 100%;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .feature-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-box h4 {
+            font-weight: 600;
+            color: var(--dark-green);
+            margin-bottom: 1rem;
+        }
+        
+        /* Products Section */
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #e7fce0 0%, #c5e1a5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .product-card-body {
+            padding: 1.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            height: 100%;
+        }
+        
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary-color);
+        }
+        
+        .testimonial-card .stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-card p {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+        
+        /* About Section */
+        .about-section {
+            background: linear-gradient(135deg, #e7fce0 0%, #f9fbe6 100%);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .about-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 400px;
+        }
+        
+        .about-content {
+            padding: 3rem;
+        }
+        
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #fff;
+            padding: 4rem 0;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form .form-control {
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            border: none;
+        }
+        
+        .newsletter-form .btn {
+            border-radius: 30px;
+            padding: 0.75rem 2rem;
+            background: #fff;
+            color: var(--primary-color);
+            font-weight: 600;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2d3436;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-section h5 {
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #b2bec3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .carousel-caption h1 {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-carousel,
+            .carousel-item {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-seedling"></i> Farm Fresh
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <!-- Slide 1: Your Custom Banner Image -->
+            <div class="carousel-item active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/img.png');">
+                <div class="carousel-caption">
+                    <h1>Fresh From Our Fields</h1>
+                    <p>Locally grown, organic produce delivered fresh to your table</p>
+                    <a href="products.html" class="btn btn-primary-custom">Shop Now</a>
+                </div>
+            </div>
+            <!-- Slide 2: Organic Vegetables -->
+            <div class="carousel-item" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&h=1080&fit=crop');">
+                <div class="carousel-caption">
+                    <h1>100% Organic</h1>
+                    <p>Natural farming methods for healthier, tastier produce</p>
+                    <a href="products.html" class="btn btn-primary-custom">Explore Products</a>
+                </div>
+            </div>
+            <!-- Slide 3: Fresh Produce Basket -->
+            <div class="carousel-item" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1080&fit=crop');">
+                <div class="carousel-caption">
+                    <h1>Farm to Table</h1>
+                    <p>Support local farmers and enjoy the freshest seasonal produce</p>
+                    <a href="contact.html" class="btn btn-primary-custom">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Features Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600&h=400&fit=crop" alt="Organic Farming" class="feature-image">
+                        <h4>100% Organic</h4>
+                        <p>All our products are certified organic and grown without harmful pesticides.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <img src="https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?w=600&h=400&fit=crop" alt="Fresh Delivery" class="feature-image">
+                        <h4>Fresh Delivery</h4>
+                        <p>We deliver fresh produce directly from our farm to your doorstep.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=400&fit=crop" alt="Farm Fresh" class="feature-image">
+                        <h4>Farm Fresh</h4>
+                        <p>Harvested at peak ripeness for maximum flavor and nutrition.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section-padding" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Products</h2>
+                <p>Discover our selection of fresh, organic produce</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop" alt="Fresh Spinach">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Fresh Spinach</h5>
+                            <p class="text-muted small">Nutrient-rich and locally grown</p>
+                            <div class="product-price">$3.99/lb</div>
+                            <a href="products.html" class="btn btn-primary-custom w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&h=300&fit=crop" alt="Carrots">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Carrots</h5>
+                            <p class="text-muted small">Sweet and crisp</p>
+                            <div class="product-price">$2.49/lb</div>
+                            <a href="products.html" class="btn btn-primary-custom w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Organic</span>
+                            <img src="https://images.unsplash.com/photo-1546097491-8c513468a49f?w=400&h=300&fit=crop" alt="Tomatoes">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Tomatoes</h5>
+                            <p class="text-muted small">Vine-ripened and juicy</p>
+                            <div class="product-price">$4.99/lb</div>
+                            <a href="products.html" class="btn btn-primary-custom w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="card product-card">
+                        <div class="product-image position-relative">
+                            <span class="product-badge">Seasonal</span>
+                            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&h=300&fit=crop" alt="Strawberries">
+                        </div>
+                        <div class="product-card-body">
+                            <h5>Strawberries</h5>
+                            <p class="text-muted small">Sweet and plump</p>
+                            <div class="product-price">$5.99/lb</div>
+                            <a href="products.html" class="btn btn-primary-custom w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="products.html" class="btn btn-primary-custom">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <p>Real feedback from our satisfied customers</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Sarah Johnson" class="testimonial-avatar">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The freshest produce I've ever had! The spinach was crisp and the tomatoes were bursting with flavor."</p>
+                        <div class="testimonial-author">- Sarah Johnson</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="Michael Chen" class="testimonial-avatar">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Amazing quality and fast delivery. I love supporting local farms and getting organic produce!"</p>
+                        <div class="testimonial-author">- Michael Chen</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop" alt="Emily Davis" class="testimonial-avatar">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Best farm-fresh produce in town! The carrots are so sweet and the service is excellent."</p>
+                        <div class="testimonial-author">- Emily Davis</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Our Farm Section -->
+    <section class="section-padding" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Our Farm</h2>
+                <p>Discover the story behind our fresh, organic produce</p>
+            </div>
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop" alt="Our Farm" class="about-image">
+                </div>
+                <div class="col-md-6">
+                    <div class="about-content">
+                        <h3 style="color: var(--dark-green); margin-bottom: 1.5rem;">Our Story</h3>
+                        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 1rem;">
+                            For over two decades, Farm Fresh has been committed to growing the finest organic produce. 
+                            Our family-owned farm uses sustainable farming practices to bring you the freshest fruits and vegetables.
+                        </p>
+                        <p style="color: var(--text-light); line-height: 1.8; margin-bottom: 1.5rem;">
+                            We believe in the power of nature and the importance of supporting local agriculture. 
+                            Every product is carefully selected and harvested at the perfect time to ensure maximum flavor and nutrition.
+                        </p>
+                        <a href="contact.html" class="btn btn-primary-custom">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <h2>Farm Gallery</h2>
+                <p>Take a look at our beautiful farm and fresh produce</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=500&h=500&fit=crop" alt="Farm Fields">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&h=500&fit=crop" alt="Fresh Vegetables">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&h=500&fit=crop" alt="Organic Produce">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&h=500&fit=crop" alt="Fresh Carrots">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1546097491-8c513468a49f?w=500&h=500&fit=crop" alt="Ripe Tomatoes">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&h=500&fit=crop" alt="Fresh Strawberries">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-3">Subscribe to Our Newsletter</h2>
+                    <p class="mb-4">Get updates on new products, seasonal offers, and farming tips delivered to your inbox.</p>
+                    <form class="newsletter-form d-flex gap-2">
+                        <input type="email" class="form-control" placeholder="Enter your email address" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="footer-section">
+                        <h5><i class="fas fa-seedling"></i> Farm Fresh</h5>
+                        <p>Your trusted source for fresh, organic produce. We're committed to bringing you the best farm-to-table experience.</p>
+                        <div class="social-links mt-3">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="footer-section">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="products.html">Products</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-section">
+                        <h5>Get in Touch</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Farm Road, Green Valley, CA 94000</li>
+                            <li><i class="fas fa-phone"></i> <a href="tel:+15551234567">(555) 123-4567</a></li>
+                            <li><i class="fas fa-envelope"></i> <a href="mailto:info@farmfresh.com">info@farmfresh.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="footer-section">
+                        <h5>Farm Hours</h5>
+                        <ul>
+                            <li>Monday - Friday: 8:00 AM - 6:00 PM</li>
+                            <li>Saturday: 7:00 AM - 5:00 PM</li>
+                            <li>Sunday: 9:00 AM - 4:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Farm Fresh. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Back to Top Button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Newsletter Form
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing to our newsletter!');
+            this.reset();
+        });
+
+        // Active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === 'index.html') {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
